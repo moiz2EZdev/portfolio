@@ -3,154 +3,508 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio.exe</title>
+    <title>Portfolio - Windows 95 Edition</title>
     <link rel="stylesheet" href="https://unpkg.com/98.css">
     <style>
+        /* 1. THE DESKTOP (Background) */
         body {
-            background-color: #008080; /* The classic teal background */
+            background-color: #008080; /* Classic Windows Teal */
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Pixelated MS Sans Serif', Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Pixelated MS Sans Serif', Arial, sans-serif;
         }
-        
-        .window {
-            width: 500px;
-            max-width: 90%;
-            box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.5);
+
+        /* 2. THE MAIN WINDOW (Centered like "My Computer") */
+        .window-container {
+            width: 800px;
+            height: 600px;
+            max-width: 95vw;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
         }
 
         .window-body {
+            flex: 1;
             display: flex;
             flex-direction: column;
+            padding: 2px; /* Tight padding like Win95 */
+            margin: 0;
+        }
+
+        /* 3. THE MENU BAR (File, Edit, View...) */
+        .menu-bar {
+            display: flex;
             gap: 15px;
-            padding: 15px;
+            padding: 2px 6px;
+            border-bottom: 1px solid #888;
         }
+        .menu-item::first-letter { text-decoration: underline; }
 
-        .profile-header {
-            text-align: center;
-            padding: 15px;
+        /* 4. THE ADDRESS BAR */
+        .address-bar {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px;
+            border-bottom: 1px solid #888;
+        }
+        .address-input {
+            flex: 1;
             background: white;
-            border: 2px solid transparent;
-            box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+            border: 2px solid;
+            border-color: #888 #fff #fff #888; /* Inset look */
+            padding: 2px 5px;
+            font-family: inherit;
         }
 
-        .profile-header h1 {
-            margin: 0;
-            font-size: 22px;
-            text-transform: uppercase;
+        /* 5. THE SPLIT VIEW (Sidebar + Content) */
+        .explorer-content {
+            display: flex;
+            flex: 1;
+            background: white;
+            border: 2px solid;
+            border-color: #888 #fff #fff #888; /* Inset look */
+            margin-top: 2px;
+            height: 100%;
+            overflow: hidden;
         }
 
-        .profile-header p {
-            margin: 5px 0 0 0;
-            font-size: 14px;
-            color: #666;
-        }
-
-        fieldset {
+        /* LEFT SIDEBAR */
+        .sidebar {
+            width: 180px;
+            background: #c0c0c0; /* Gray sidebar */
+            border-right: 2px solid #fff;
             padding: 10px;
-            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
-
-        legend {
+        .sidebar-header {
             font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .nav-item {
+            cursor: pointer;
+            padding: 2px 5px;
+            border: 1px dotted transparent;
+        }
+        .nav-item:hover {
+            border: 1px dotted #000;
+            background: #000080;
+            color: white;
         }
 
-        .project-item {
-            margin-bottom: 12px;
-            border-bottom: 1px dotted #888;
-            padding-bottom: 8px;
+        /* RIGHT CONTENT AREA */
+        .main-view {
+            flex: 1;
+            padding: 20px;
+            background: white;
+            overflow-y: auto;
         }
 
-        .project-item:last-child {
-            border-bottom: none;
-        }
+        /* 6. CONTENT STYLING */
+        h1 { font-size: 24px; border-bottom: 2px solid #000; padding-bottom: 5px; }
+        h2 { font-size: 18px; margin-top: 20px; color: #000080; }
         
-        .project-title {
-            font-weight: bold;
-            font-size: 15px;
-            display: block;
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
         }
-
-        .tech-stack {
-            font-size: 12px;
-            color: #444;
-            margin-top: 4px;
-            font-style: italic;
-        }
-
-        ul.interests {
-            margin: 0;
-            padding-left: 20px;
-            font-size: 13px;
-        }
-
-        .footer {
+        .file-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
-            font-size: 12px;
-            margin-top: 5px;
+            cursor: pointer;
+        }
+        .file-icon img { width: 32px; height: 32px; margin-bottom: 5px; }
+        .file-icon span { padding: 2px; border: 1px dotted transparent; }
+        .file-icon:hover span { background: #000080; color: white; border: 1px dotted #fff; }
+
+        .project-card {
+            border: 2px solid;
+            border-color: #dfdfdf #0a0a0a #0a0a0a #dfdfdf;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #c0c0c0;
         }
 
-        a {
-            color: #000080;
+        /* 7. THE TASKBAR (Bottom) */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 28px;
+            background: #c0c0c0;
+            border-top: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            padding: 2px;
+            z-index: 100;
+        }
+        .start-btn {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 2px 6px;
+            height: 22px;
+        }
+        .time-tray {
+            margin-left: auto;
+            border: 2px solid;
+            border-color: #888 #fff #fff #888;
+            padding: 2px 8px;
+            background: #c0c0c0;
+            font-size: 12px;
+            margin-right: 2px;
         }
     </style>
 </head>
 <body>
 
-    <div class="window">
+    <div class="window window-container">
         <div class="title-bar">
-            <div class="title-bar-text">Resume.exe - Student Profile</div>
+            <div class="title-bar-text">C:\Users\Student\Portfolio</div>
             <div class="title-bar-controls">
                 <button aria-label="Minimize"></button>
                 <button aria-label="Maximize"></button>
                 <button aria-label="Close"></button>
             </div>
         </div>
-
+        
         <div class="window-body">
-            
-            <div class="profile-header">
-                <h1>[YOUR NAME HERE]</h1>
-                <p>Environmental Science Student & Tech Enthusiast</p>
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">View</div>
+                <div class="menu-item">Help</div>
             </div>
 
-            <fieldset>
-                <legend>System Properties</legend>
-                <p>University student with a focus on Hydrology and Natural Resources. Passionate about using data to understand environmental systems. When I'm not studying, I'm optimizing PC hardware and testing new tech.</p>
-            </fieldset>
+            <div class="address-bar">
+                <span>Address:</span>
+                <div class="address-input">C:\Users\Student\Portfolio\Resume.doc</div>
+            </div>
 
-            <fieldset>
-                <legend>Current Projects</legend>
-                
-                <div class="project-item">
-                    <span class="project-title">Hydrology Quiz Database</span>
-                    <p>Processed lecture materials to create a comprehensive question bank for water management systems. Analyzed key data points for exam prep optimization.</p>
-                    <div class="tech-stack">Skills: Data Synthesis, Research, Resource Management</div>
+            <div class="explorer-content">
+                <div class="sidebar">
+                    <div class="sidebar-header">Folders</div>
+                    <div class="nav-item">Desktop</div>
+                    <div class="nav-item">My Documents</div>
+                    <div class="nav-item" style="font-weight: bold;">> Projects</div>
+                    <div class="nav-item" style="padding-left: 15px;">- Hydrology</div>
+                    <div class="nav-item" style="padding-left: 15px;">- EnviroSci</div>
+                    <div class="nav-item">My Computer</div>
+                    <div class="nav-item">Recycle Bin</div>
                 </div>
 
-                <div class="project-item">
-                    <span class="project-title">Natural Resources Assessment</span>
-                    <p>Conducted a review of forest management strategies and environmental impact factors.</p>
-                    <div class="tech-stack">Skills: Environmental Analysis, Reporting</div>
+                <div class="main-view">
+                    <h1>Welcome</h1>
+                    <p>I am an Environmental Science student passionate about data, hydrology, and technology. This is my digital workspace.</p>
+
+                    <h2>Projects (C:\Projects)</h2>
+                    
+                    <div class="project-card">
+                        <strong>Hydrology Quiz Database.exe</strong>
+                        <p>Processed lecture materials to create a comprehensive question bank for water management systems.</p>
+                    </div>
+
+                    <div class="project-card">
+                        <strong>Natural Resources Assessment.doc</strong>
+                        <p>A structured review of forest management strategies and environmental impact factors.</p>
+                    </div>
+
+                    <h2>Tech Specs (Skills)</h2>
+                    <ul style="list-style-type: square;">
+                        <li><strong>Primary Focus:</strong> Environmental Science & Hydrology</li>
+                        <li><strong>Technical:</strong> Research Data Synthesis, Reporting</li>
+                        <li><strong>Hardware:</strong> PC Building, Peripheral Optimization</li>
+                        <li><strong>Mobile:</strong> Legacy Tech Preservation</li>
+                    </ul>
+
+                    <button style="margin-top: 20px;" onclick="window.location.href='mailto:youremail@gmail.com'">Email Me</button>
                 </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Hardware & Interests</legend>
-                <ul class="interests">
-                    <li><strong>PC Building:</strong> Peripherals & Hardware optimization (Mice/Keyboards).</li>
-                    <li><strong>Mobile Tech:</strong> Legacy feature preservation enthusiast.</li>
-                    <li><strong>Research:</strong> Academic data processing.</li>
-                </ul>
-            </fieldset>
-
-            <div class="footer">
-                <p>Status: <span style="color: green;">Online</span> | <a href="mailto:your-email@example.com">Email Me</a></p>
             </div>
         </div>
+    </div>
+
+    <div class="taskbar">
+        <button class="start-btn">
+            <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" style="height: 16px;">
+            Start
+        </button>
+        <div class="bar-divider"></div>
+        <div class="window-tab active" style="border: 2px solid; border-color: #888 #fff #fff #888; padding: 2px 5px; margin-left: 5px; background: #ddd; font-weight: bold;">
+            Portfolio
+        </div>
+        <div class="time-tray">12:00 PM</div>
+    </div>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Windows 95 Edition</title>
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+    <style>
+        /* 1. THE DESKTOP (Background) */
+        body {
+            background-color: #008080; /* Classic Windows Teal */
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Pixelated MS Sans Serif', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 2. THE MAIN WINDOW (Centered like "My Computer") */
+        .window-container {
+            width: 800px;
+            height: 600px;
+            max-width: 95vw;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .window-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 2px; /* Tight padding like Win95 */
+            margin: 0;
+        }
+
+        /* 3. THE MENU BAR (File, Edit, View...) */
+        .menu-bar {
+            display: flex;
+            gap: 15px;
+            padding: 2px 6px;
+            border-bottom: 1px solid #888;
+        }
+        .menu-item::first-letter { text-decoration: underline; }
+
+        /* 4. THE ADDRESS BAR */
+        .address-bar {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px;
+            border-bottom: 1px solid #888;
+        }
+        .address-input {
+            flex: 1;
+            background: white;
+            border: 2px solid;
+            border-color: #888 #fff #fff #888; /* Inset look */
+            padding: 2px 5px;
+            font-family: inherit;
+        }
+
+        /* 5. THE SPLIT VIEW (Sidebar + Content) */
+        .explorer-content {
+            display: flex;
+            flex: 1;
+            background: white;
+            border: 2px solid;
+            border-color: #888 #fff #fff #888; /* Inset look */
+            margin-top: 2px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* LEFT SIDEBAR */
+        .sidebar {
+            width: 180px;
+            background: #c0c0c0; /* Gray sidebar */
+            border-right: 2px solid #fff;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .sidebar-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .nav-item {
+            cursor: pointer;
+            padding: 2px 5px;
+            border: 1px dotted transparent;
+        }
+        .nav-item:hover {
+            border: 1px dotted #000;
+            background: #000080;
+            color: white;
+        }
+
+        /* RIGHT CONTENT AREA */
+        .main-view {
+            flex: 1;
+            padding: 20px;
+            background: white;
+            overflow-y: auto;
+        }
+
+        /* 6. CONTENT STYLING */
+        h1 { font-size: 24px; border-bottom: 2px solid #000; padding-bottom: 5px; }
+        h2 { font-size: 18px; margin-top: 20px; color: #000080; }
+        
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .file-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+        }
+        .file-icon img { width: 32px; height: 32px; margin-bottom: 5px; }
+        .file-icon span { padding: 2px; border: 1px dotted transparent; }
+        .file-icon:hover span { background: #000080; color: white; border: 1px dotted #fff; }
+
+        .project-card {
+            border: 2px solid;
+            border-color: #dfdfdf #0a0a0a #0a0a0a #dfdfdf;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #c0c0c0;
+        }
+
+        /* 7. THE TASKBAR (Bottom) */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 28px;
+            background: #c0c0c0;
+            border-top: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            padding: 2px;
+            z-index: 100;
+        }
+        .start-btn {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 2px 6px;
+            height: 22px;
+        }
+        .time-tray {
+            margin-left: auto;
+            border: 2px solid;
+            border-color: #888 #fff #fff #888;
+            padding: 2px 8px;
+            background: #c0c0c0;
+            font-size: 12px;
+            margin-right: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="window window-container">
+        <div class="title-bar">
+            <div class="title-bar-text">C:\Users\Student\Portfolio</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        
+        <div class="window-body">
+            <div class="menu-bar">
+                <div class="menu-item">File</div>
+                <div class="menu-item">Edit</div>
+                <div class="menu-item">View</div>
+                <div class="menu-item">Help</div>
+            </div>
+
+            <div class="address-bar">
+                <span>Address:</span>
+                <div class="address-input">C:\Users\Student\Portfolio\Resume.doc</div>
+            </div>
+
+            <div class="explorer-content">
+                <div class="sidebar">
+                    <div class="sidebar-header">Folders</div>
+                    <div class="nav-item">Desktop</div>
+                    <div class="nav-item">My Documents</div>
+                    <div class="nav-item" style="font-weight: bold;">> Projects</div>
+                    <div class="nav-item" style="padding-left: 15px;">- Hydrology</div>
+                    <div class="nav-item" style="padding-left: 15px;">- EnviroSci</div>
+                    <div class="nav-item">My Computer</div>
+                    <div class="nav-item">Recycle Bin</div>
+                </div>
+
+                <div class="main-view">
+                    <h1>Welcome</h1>
+                    <p>I am an Environmental Science student passionate about data, hydrology, and technology. This is my digital workspace.</p>
+
+                    <h2>Projects (C:\Projects)</h2>
+                    
+                    <div class="project-card">
+                        <strong>Hydrology Quiz Database.exe</strong>
+                        <p>Processed lecture materials to create a comprehensive question bank for water management systems.</p>
+                    </div>
+
+                    <div class="project-card">
+                        <strong>Natural Resources Assessment.doc</strong>
+                        <p>A structured review of forest management strategies and environmental impact factors.</p>
+                    </div>
+
+                    <h2>Tech Specs (Skills)</h2>
+                    <ul style="list-style-type: square;">
+                        <li><strong>Primary Focus:</strong> Environmental Science & Hydrology</li>
+                        <li><strong>Technical:</strong> Research Data Synthesis, Reporting</li>
+                        <li><strong>Hardware:</strong> PC Building, Peripheral Optimization</li>
+                        <li><strong>Mobile:</strong> Legacy Tech Preservation</li>
+                    </ul>
+
+                    <button style="margin-top: 20px;" onclick="window.location.href='mailto:youremail@gmail.com'">Email Me</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        <button class="start-btn">
+            <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" style="height: 16px;">
+            Start
+        </button>
+        <div class="bar-divider"></div>
+        <div class="window-tab active" style="border: 2px solid; border-color: #888 #fff #fff #888; padding: 2px 5px; margin-left: 5px; background: #ddd; font-weight: bold;">
+            Portfolio
+        </div>
+        <div class="time-tray">12:00 PM</div>
     </div>
 
 </body>
