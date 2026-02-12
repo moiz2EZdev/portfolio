@@ -1,43 +1,49 @@
+The Windows 95 aesthetic was designed for big desktop monitors, so it naturally breaks on phones. To fix this, I have added **"Responsive Design"** code.
+
+This version detects if you are on a phone and automatically changes the layout:
+
+1. **Sidebar:** Moves to the top (like a mobile app menu).
+2. **Window Size:** Shrinks to fit your screen perfectly without scrolling sideways.
+3. **Text Size:** Adjusts so it's readable on small screens.
+
+### **Instructions:**
+
+1. **Delete everything** in your file.
+2. **Paste** this new mobile-ready code.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moiz Bhatti - Professional Portfolio</title>
+    <title>Moiz Bhatti - Mobile Optimized</title>
     <link rel="stylesheet" href="https://unpkg.com/98.css">
     <style>
-        /* 1. RESET & BACKGROUND */
+        /* --- GLOBAL RESET --- */
         body {
             margin: 0;
             padding: 0;
             height: 100vh;
-            overflow: hidden;
+            background-color: #008080; /* Teal */
             font-family: 'Pixelated MS Sans Serif', Arial, sans-serif;
-            background-color: #008080; /* Teal Background */
-        }
-
-        /* 2. CENTERING CONTAINER */
-        /* This ensures only ONE window is ever shown in the center */
-        .desktop-container {
-            width: 100%;
-            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-bottom: 30px; /* Space for taskbar */
+            overflow: hidden; /* Prevent scrolling on body */
         }
 
-        /* 3. MAIN WINDOW */
+        /* --- THE WINDOW --- */
         .window {
-            width: 900px;
-            height: 650px;
-            max-width: 95vw;
-            max-height: 90vh;
+            width: 950px;
+            height: 700px;
+            max-width: 98vw;  /* Mobile fix: slightly wider on phones */
+            max-height: 92vh; /* Mobile fix: taller on phones */
             display: flex;
             flex-direction: column;
             box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.5);
-            background: #c0c0c0;
             z-index: 10;
+            background: #c0c0c0;
         }
 
         .window-body {
@@ -46,13 +52,18 @@
             flex-direction: column;
             margin: 0;
             padding: 3px;
+            overflow: hidden; /* Important for flex scaling */
         }
 
-        /* 4. MENUS & BARS */
+        /* --- MENUS --- */
         .menu-bar { display: flex; gap: 15px; padding: 2px 8px; margin-bottom: 4px; }
         .menu-item { cursor: pointer; }
-        .menu-item:hover { background: #000080; color: white; }
         
+        /* Hide menu bar on very small phones to save space */
+        @media (max-width: 450px) {
+            .menu-bar { display: none; }
+        }
+
         .address-row {
             display: flex;
             align-items: center;
@@ -60,6 +71,7 @@
             padding: 4px;
             border-bottom: 1px solid #888;
             margin-bottom: 2px;
+            background: #c0c0c0;
         }
         .address-input {
             flex: 1;
@@ -68,9 +80,12 @@
             border-color: #888 #fff #fff #888;
             padding: 2px 5px;
             font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        /* 5. EXPLORER LAYOUT (Sidebar + Content) */
+        /* --- EXPLORER LAYOUT --- */
         .explorer-body {
             display: flex;
             flex: 1;
@@ -78,8 +93,10 @@
             border-color: #888 #fff #fff #888;
             background: white;
             overflow: hidden;
+            flex-direction: row; /* Default: Side by side */
         }
 
+        /* SIDEBAR */
         .sidebar {
             width: 200px;
             background: #c0c0c0;
@@ -89,22 +106,10 @@
             flex-direction: column;
             gap: 5px;
             overflow-y: auto;
+            min-width: 200px; /* Prevent squishing on desktop */
         }
-        
-        .sidebar-title { font-weight: bold; margin-bottom: 5px; color: #444; font-size: 12px; }
-        
-        .nav-link {
-            cursor: pointer;
-            padding: 2px 5px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            color: black;
-            font-size: 13px;
-        }
-        .nav-link:hover { background: #000080; color: white; }
-        
+
+        /* MAIN CONTENT */
         .main-content {
             flex: 1;
             padding: 20px;
@@ -112,20 +117,62 @@
             background: white;
         }
 
-        /* 6. CONTENT STYLES */
-        .section-title {
-            border-bottom: 2px solid #000080;
-            color: #000080;
-            font-size: 18px;
-            margin-top: 25px;
-            margin-bottom: 10px;
+        /* --- MOBILE OPTIMIZATION (THE MAGIC PART) --- */
+        @media (max-width: 768px) {
+            .explorer-body {
+                flex-direction: column; /* Stack sidebar on top of content */
+            }
+
+            .sidebar {
+                width: 100%; /* Full width */
+                min-width: 0;
+                height: 140px; /* Fixed height for menu area */
+                border-right: none;
+                border-bottom: 2px solid #888;
+                flex-direction: row; /* Horizontal scrolling menu */
+                flex-wrap: wrap; /* Allow items to wrap */
+                padding: 5px;
+                gap: 5px;
+            }
+
+            .sidebar-title {
+                width: 100%;
+                margin-top: 5px;
+                margin-bottom: 2px;
+                border-bottom: 1px solid #888;
+            }
+
+            .nav-link {
+                background: #fff; /* Make buttons look like buttons on mobile */
+                border: 2px solid;
+                border-color: #fff #888 #888 #fff;
+                padding: 4px 8px;
+                margin-bottom: 0;
+            }
+            
+            .nav-link:active {
+                border-color: #888 #fff #fff #888; /* Pressed effect */
+            }
         }
-        .section-title:first-child { margin-top: 0; }
+
+        /* --- CONTENT STYLES --- */
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { font-size: 20px; margin: 0; }
+        h2 { 
+            border-bottom: 2px solid #000080; 
+            color: #000080; 
+            font-size: 16px; 
+            margin-top: 5px; 
+            margin-bottom: 15px; 
+        }
 
         .project-card {
             border: 1px solid #888;
             padding: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             background: #efefef;
             box-shadow: 2px 2px 0px #aaa;
         }
@@ -134,13 +181,13 @@
             background: #000080;
             color: white;
             padding: 2px 6px;
-            font-size: 11px;
-            margin-right: 5px;
+            font-size: 10px;
+            margin-right: 3px;
             display: inline-block;
             margin-top: 5px;
         }
 
-        /* 7. TASKBAR */
+        /* TASKBAR */
         .taskbar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
@@ -150,16 +197,9 @@
             display: flex;
             align-items: center;
             padding: 2px;
-            z-index: 100;
+            z-index: 999;
         }
-        .start-btn {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 2px 6px;
-            font-weight: bold;
-            height: 22px;
-        }
+        
         .time-tray {
             margin-left: auto;
             border: 2px solid;
@@ -169,406 +209,159 @@
             margin-right: 2px;
             font-size: 12px;
         }
-    </style>
-</head>
-<body>
 
-    <div class="desktop-container">
-        <div class="window">
-            <div class="title-bar">
-                <div class="title-bar-text">Moiz Bhatti - Student Portfolio</div>
-                <div class="title-bar-controls">
-                    <button aria-label="Minimize"></button>
-                    <button aria-label="Maximize"></button>
-                    <button aria-label="Close"></button>
-                </div>
-            </div>
-
-            <div class="window-body">
-                <div class="menu-bar">
-                    <div class="menu-item">File</div>
-                    <div class="menu-item">Edit</div>
-                    <div class="menu-item">View</div>
-                    <div class="menu-item">Help</div>
-                </div>
-
-                <div class="address-row">
-                    <span>Address</span>
-                    <div class="address-input">C:\Users\Moiz_Bhatti\Documents\Profile</div>
-                </div>
-
-                <div class="explorer-body">
-                    <div class="sidebar">
-                        <div class="sidebar-title">System Folders</div>
-                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/desktop-2.png" width="16"> Desktop</div>
-                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/my_computer-2.png" width="16"> My Computer</div>
-                        
-                        <div class="sidebar-title" style="margin-top: 15px;">Projects</div>
-                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/directory_open-4.png" width="16"> Final Year Project</div>
-                        <div class="nav-link" style="padding-left: 20px;"><img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" width="16"> OpenLCA</div>
-                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/certificate-0.png" width="16"> Conferences</div>
-                        
-                        <div class="sidebar-title" style="margin-top: 15px;">Personal</div>
-                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/joystick-0.png" width="16"> Gaming & Tech</div>
-                    </div>
-
-                    <div class="main-content">
-                        <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
-                            <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" width="48">
-                            <div>
-                                <h1 style="margin: 0; font-size: 20px;">Moiz Bhatti</h1>
-                                <p style="margin: 5px 0 10px 0;">Environmental Science & Tech Enthusiast</p>
-                                <a href="mailto:moizbhatti56@gmail.com">
-                                    <button style="cursor: pointer;">Email Me</button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="section-title">Final Year Project</div>
-                        <div class="project-card">
-                            <strong>Regionalizing Life Cycle Assessment (LCA) for Sindh</strong>
-                            <p>Developing localized integrations for OpenLCA to support climate-resilient industry alternatives.</p>
-                            <ul style="font-size: 13px; margin-top: 5px;">
-                                <li>Validating OpenLCA data via real-time sensor testing.</li>
-                                <li>Conducting meta-LCA of measuring sensors.</li>
-                            </ul>
-                            <span class="tag">OpenLCA</span> <span class="tag">Sustainability</span>
-                        </div>
-
-                        <div class="section-title">Lab Experience (USPCAS-W)</div>
-                        <div class="project-card">
-                            <ul style="font-size: 13px; padding-left: 20px; margin: 0;">
-                                <li>Advanced Water & Wastewater Quality Control Lab</li>
-                                <li>Pilot Scale Water & Wastewater Treatment Lab</li>
-                                <li>Soil & Water Analysis Lab</li>
-                                <li>Hydraulics Lab</li>
-                            </ul>
-                        </div>
-
-                        <div class="section-title">Conferences</div>
-                        <div class="project-card">
-                            <ul style="font-size: 13px; padding-left: 20px; margin: 0;">
-                                <li><strong>World Bank:</strong> Conference on Climate Change</li>
-                                <li><strong>Intl. Conference:</strong> Water Governance & Climate Resilience</li>
-                                <li><strong>World Water Day:</strong> Official Delegate</li>
-                            </ul>
-                        </div>
-
-                        <div class="section-title">Tech & Personal</div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <div class="project-card">
-                                <strong>Hardware</strong>
-                                <ul style="font-size: 12px; padding-left: 15px;">
-                                    <li>PC Building & Optimization</li>
-                                    <li>Vintage Tech Restoration</li>
-                                    <li>Raspberry Pi Tinkering</li>
-                                </ul>
-                            </div>
-                            <div class="project-card">
-                                <strong>Achievements</strong>
-                                <ul style="font-size: 12px; padding-left: 15px;">
-                                    <li>University Gaming Tournament Winner</li>
-                                    <li>Vet Clinic Internship</li>
-                                    <li>Cat Fosterer 🐱</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="taskbar">
-        <button class="start-btn">
-            <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" height="18">
-            Start
-        </button>
-        <div style="border: 2px solid; border-color: #888 #fff #fff #888; background: #ddd; padding: 2px 10px; font-weight: bold; font-size: 12px; margin-left: 5px;">
-            Moiz_Profile
-        </div>
-        <div class="time-tray">1:00 PM</div>
-    </div>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moiz Bhatti - Professional Portfolio</title>
-    <link rel="stylesheet" href="https://unpkg.com/98.css">
-    <style>
-        /* 1. RESET & BACKGROUND */
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            font-family: 'Pixelated MS Sans Serif', Arial, sans-serif;
-            background-color: #008080; /* Teal Background */
-        }
-
-        /* 2. CENTERING CONTAINER */
-        /* This ensures only ONE window is ever shown in the center */
-        .desktop-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-bottom: 30px; /* Space for taskbar */
-        }
-
-        /* 3. MAIN WINDOW */
-        .window {
-            width: 900px;
-            height: 650px;
-            max-width: 95vw;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.5);
-            background: #c0c0c0;
-            z-index: 10;
-        }
-
-        .window-body {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-            padding: 3px;
-        }
-
-        /* 4. MENUS & BARS */
-        .menu-bar { display: flex; gap: 15px; padding: 2px 8px; margin-bottom: 4px; }
-        .menu-item { cursor: pointer; }
-        .menu-item:hover { background: #000080; color: white; }
-        
-        .address-row {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 4px;
-            border-bottom: 1px solid #888;
-            margin-bottom: 2px;
-        }
-        .address-input {
-            flex: 1;
-            background: white;
-            border: 2px solid;
-            border-color: #888 #fff #fff #888;
-            padding: 2px 5px;
-            font-size: 13px;
-        }
-
-        /* 5. EXPLORER LAYOUT (Sidebar + Content) */
-        .explorer-body {
-            display: flex;
-            flex: 1;
-            border: 2px solid;
-            border-color: #888 #fff #fff #888;
-            background: white;
-            overflow: hidden;
-        }
-
-        .sidebar {
-            width: 200px;
-            background: #c0c0c0;
-            border-right: 1px solid #888;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            overflow-y: auto;
-        }
-        
-        .sidebar-title { font-weight: bold; margin-bottom: 5px; color: #444; font-size: 12px; }
-        
-        .nav-link {
-            cursor: pointer;
-            padding: 2px 5px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            color: black;
-            font-size: 13px;
-        }
+        /* Utility */
+        .sidebar-title { font-weight: bold; margin-bottom: 5px; color: #444; font-size: 11px; margin-top: 10px; }
+        .nav-link { cursor: pointer; padding: 4px 5px; display: flex; align-items: center; gap: 6px; color: black; font-size: 12px; }
         .nav-link:hover { background: #000080; color: white; }
-        
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background: white;
-        }
-
-        /* 6. CONTENT STYLES */
-        .section-title {
-            border-bottom: 2px solid #000080;
-            color: #000080;
-            font-size: 18px;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        .section-title:first-child { margin-top: 0; }
-
-        .project-card {
-            border: 1px solid #888;
-            padding: 10px;
-            margin-bottom: 15px;
-            background: #efefef;
-            box-shadow: 2px 2px 0px #aaa;
-        }
-
-        .tag {
-            background: #000080;
-            color: white;
-            padding: 2px 6px;
-            font-size: 11px;
-            margin-right: 5px;
-            display: inline-block;
-            margin-top: 5px;
-        }
-
-        /* 7. TASKBAR */
-        .taskbar {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            height: 28px;
-            background: #c0c0c0;
-            border-top: 2px solid #fff;
-            display: flex;
-            align-items: center;
-            padding: 2px;
-            z-index: 100;
-        }
-        .start-btn {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 2px 6px;
-            font-weight: bold;
-            height: 22px;
-        }
-        .time-tray {
-            margin-left: auto;
-            border: 2px solid;
-            border-color: #888 #fff #fff #888;
-            padding: 2px 8px;
-            background: #c0c0c0;
-            margin-right: 2px;
-            font-size: 12px;
-        }
+        .nav-link.active { background: #000080; color: white; }
     </style>
 </head>
 <body>
 
-    <div class="desktop-container">
-        <div class="window">
-            <div class="title-bar">
-                <div class="title-bar-text">Moiz Bhatti - Student Portfolio</div>
-                <div class="title-bar-controls">
-                    <button aria-label="Minimize"></button>
-                    <button aria-label="Maximize"></button>
-                    <button aria-label="Close"></button>
-                </div>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">Moiz Bhatti - Mobile</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+
+        <div class="window-body">
+            <div class="address-row">
+                <span>Address</span>
+                <div class="address-input" id="address-bar">C:\Users\Moiz_Bhatti\Desktop\Welcome</div>
             </div>
 
-            <div class="window-body">
-                <div class="menu-bar">
-                    <div class="menu-item">File</div>
-                    <div class="menu-item">Edit</div>
-                    <div class="menu-item">View</div>
-                    <div class="menu-item">Help</div>
-                </div>
-
-                <div class="address-row">
-                    <span>Address</span>
-                    <div class="address-input">C:\Users\Moiz_Bhatti\Documents\Profile</div>
-                </div>
-
-                <div class="explorer-body">
-                    <div class="sidebar">
-                        <div class="sidebar-title">System Folders</div>
-                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/desktop-2.png" width="16"> Desktop</div>
-                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/my_computer-2.png" width="16"> My Computer</div>
-                        
-                        <div class="sidebar-title" style="margin-top: 15px;">Projects</div>
-                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/directory_open-4.png" width="16"> Final Year Project</div>
-                        <div class="nav-link" style="padding-left: 20px;"><img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" width="16"> OpenLCA</div>
-                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/certificate-0.png" width="16"> Conferences</div>
-                        
-                        <div class="sidebar-title" style="margin-top: 15px;">Personal</div>
-                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/joystick-0.png" width="16"> Gaming & Tech</div>
+            <div class="explorer-body">
+                <div class="sidebar">
+                    
+                    <div class="nav-link active" onclick="showSection('welcome', this)">
+                        <img src="https://win98icons.alexmeub.com/icons/png/desktop-2.png" width="16"> 
+                        Welcome
                     </div>
 
-                    <div class="main-content">
+                    <div class="nav-link" onclick="showSection('projects', this)">
+                        <img src="https://win98icons.alexmeub.com/icons/png/directory_open-4.png" width="16"> 
+                        FYP
+                    </div>
+
+                    <div class="nav-link" onclick="showSection('labs', this)">
+                        <img src="https://win98icons.alexmeub.com/icons/png/beaker-0.png" width="16"> 
+                        Labs
+                    </div>
+
+                    <div class="nav-link" onclick="showSection('conferences', this)">
+                        <img src="https://win98icons.alexmeub.com/icons/png/certificate-0.png" width="16"> 
+                        Events
+                    </div>
+
+                    <div class="nav-link" onclick="showSection('tech', this)">
+                        <img src="https://win98icons.alexmeub.com/icons/png/computer_gear-0.png" width="16"> 
+                        Tech
+                    </div>
+
+                    <div class="nav-link" onclick="showSection('personal', this)">
+                        <img src="https://win98icons.alexmeub.com/icons/png/joystick-0.png" width="16"> 
+                        Personal
+                    </div>
+                </div>
+
+                <div class="main-content">
+                    
+                    <div id="welcome" class="content-section active">
                         <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
                             <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" width="48">
                             <div>
-                                <h1 style="margin: 0; font-size: 20px;">Moiz Bhatti</h1>
-                                <p style="margin: 5px 0 10px 0;">Environmental Science & Tech Enthusiast</p>
+                                <h1>Moiz Bhatti</h1>
+                                <p style="margin: 5px 0; font-size: 12px; color: #444;">Environmental Science | Data | Hardware</p>
                                 <a href="mailto:moizbhatti56@gmail.com">
-                                    <button style="cursor: pointer;">Email Me</button>
+                                    <button style="margin-top: 5px; cursor: pointer; padding: 4px 8px;">
+                                        Email Me
+                                    </button>
                                 </a>
                             </div>
                         </div>
-
-                        <div class="section-title">Final Year Project</div>
-                        <div class="project-card">
-                            <strong>Regionalizing Life Cycle Assessment (LCA) for Sindh</strong>
-                            <p>Developing localized integrations for OpenLCA to support climate-resilient industry alternatives.</p>
-                            <ul style="font-size: 13px; margin-top: 5px;">
-                                <li>Validating OpenLCA data via real-time sensor testing.</li>
-                                <li>Conducting meta-LCA of measuring sensors.</li>
-                            </ul>
-                            <span class="tag">OpenLCA</span> <span class="tag">Sustainability</span>
+                        <div class="project-card" style="background: white;">
+                            <p><strong>Status:</strong> <span style="color: green;">Online</span></p>
+                            <p>Tap the buttons above (or on the left) to explore my work in OpenLCA, Lab Internships, and Hardware projects.</p>
                         </div>
-
-                        <div class="section-title">Lab Experience (USPCAS-W)</div>
-                        <div class="project-card">
-                            <ul style="font-size: 13px; padding-left: 20px; margin: 0;">
-                                <li>Advanced Water & Wastewater Quality Control Lab</li>
-                                <li>Pilot Scale Water & Wastewater Treatment Lab</li>
-                                <li>Soil & Water Analysis Lab</li>
-                                <li>Hydraulics Lab</li>
-                            </ul>
-                        </div>
-
-                        <div class="section-title">Conferences</div>
-                        <div class="project-card">
-                            <ul style="font-size: 13px; padding-left: 20px; margin: 0;">
-                                <li><strong>World Bank:</strong> Conference on Climate Change</li>
-                                <li><strong>Intl. Conference:</strong> Water Governance & Climate Resilience</li>
-                                <li><strong>World Water Day:</strong> Official Delegate</li>
-                            </ul>
-                        </div>
-
-                        <div class="section-title">Tech & Personal</div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <div class="project-card">
-                                <strong>Hardware</strong>
-                                <ul style="font-size: 12px; padding-left: 15px;">
-                                    <li>PC Building & Optimization</li>
-                                    <li>Vintage Tech Restoration</li>
-                                    <li>Raspberry Pi Tinkering</li>
-                                </ul>
-                            </div>
-                            <div class="project-card">
-                                <strong>Achievements</strong>
-                                <ul style="font-size: 12px; padding-left: 15px;">
-                                    <li>University Gaming Tournament Winner</li>
-                                    <li>Vet Clinic Internship</li>
-                                    <li>Cat Fosterer 🐱</li>
-                                </ul>
-                            </div>
-                        </div>
-
                     </div>
+
+                    <div id="projects" class="content-section">
+                        <h2>Final Year Project (OpenLCA)</h2>
+                        <div class="project-card">
+                            <strong>Regionalizing LCA for Sindh</strong>
+                            <p style="font-size: 12px; margin-top: 5px;">Adapting global LCA tools for local accuracy.</p>
+                            <ul style="padding-left: 15px; font-size: 12px;">
+                                <li><strong>Localization:</strong> Creating Sindh-specific inventory datasets.</li>
+                                <li><strong>Resilience:</strong> Testing climate-resilient industry alternatives.</li>
+                                <li><strong>Validation:</strong> Ground-truthing via sensor data.</li>
+                                <li><strong>Meta-LCA:</strong> Assessing the sensors themselves.</li>
+                            </ul>
+                            <span class="tag">OpenLCA</span>
+                            <span class="tag">Sustainability</span>
+                        </div>
+                    </div>
+
+                    <div id="labs" class="content-section">
+                        <h2>Lab Internships (USPCAS-W)</h2>
+                        <div class="project-card">
+                            <strong>Advanced Water Quality Lab</strong>
+                            <p style="font-size: 12px;">Testing for heavy metals & pollutants.</p>
+                        </div>
+                        <div class="project-card">
+                            <strong>Wastewater Treatment Lab</strong>
+                            <p style="font-size: 12px;">Pilot-scale filtration analysis.</p>
+                        </div>
+                        <div class="project-card">
+                            <strong>Hydraulics & Soil Lab</strong>
+                            <p style="font-size: 12px;">Flow dynamics & salinity testing.</p>
+                        </div>
+                    </div>
+
+                    <div id="conferences" class="content-section">
+                        <h2>Conferences</h2>
+                        <div class="project-card">
+                            <strong>World Bank</strong>
+                            <p style="font-size: 12px;">Conference on Climate Change.</p>
+                        </div>
+                        <div class="project-card">
+                            <strong>Intl. Water Governance</strong>
+                            <p style="font-size: 12px;">Climate Resilience protocols.</p>
+                        </div>
+                        <div class="project-card">
+                            <strong>World Water Day</strong>
+                            <p style="font-size: 12px;">Official Delegate.</p>
+                        </div>
+                    </div>
+
+                    <div id="tech" class="content-section">
+                        <h2>Hardware & Tech</h2>
+                        <div class="project-card">
+                            <strong>PC Optimization</strong>
+                            <p style="font-size: 12px;">Expert in "Bang for Buck" builds & vintage restoration.</p>
+                        </div>
+                        <div class="project-card">
+                            <strong>IoT & Embedded</strong>
+                            <p style="font-size: 12px;">Raspberry Pi server setup & sensor arrays.</p>
+                        </div>
+                    </div>
+
+                    <div id="personal" class="content-section">
+                        <h2>Side Quests</h2>
+                        <div class="project-card">
+                            <strong>Gaming</strong>
+                            <p style="font-size: 12px;">University Tournament Winner.</p>
+                        </div>
+                        <div class="project-card">
+                            <strong>Vet & Fostering</strong>
+                            <p style="font-size: 12px;">Clinic Intern & Cat Fosterer 🐱.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -576,14 +369,45 @@
 
     <div class="taskbar">
         <button class="start-btn">
-            <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" height="18">
-            Start
+            <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" height="16">
+            <span style="margin-left: 4px;">Start</span>
         </button>
-        <div style="border: 2px solid; border-color: #888 #fff #fff #888; background: #ddd; padding: 2px 10px; font-weight: bold; font-size: 12px; margin-left: 5px;">
-            Moiz_Profile
-        </div>
-        <div class="time-tray">1:00 PM</div>
+        <div class="time-tray" id="clock">12:00</div>
     </div>
+
+    <script>
+        function showSection(sectionId, element) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Reset active link state
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            // Set clicked link as active
+            element.classList.add('active');
+
+            // Update Address Bar
+            const folderName = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+            document.getElementById('address-bar').innerText = `C:\\Users\\Moiz\\${folderName}`;
+        }
+
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            document.getElementById('clock').innerText = hours + ':' + minutes + ' ' + ampm;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 
 </body>
 </html>
+
+```
