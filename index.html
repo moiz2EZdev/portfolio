@@ -3,22 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moiz Bhatti - Portfolio</title>
+    <title>Moiz Bhatti - Professional Portfolio</title>
     <link rel="stylesheet" href="https://unpkg.com/98.css">
     <style>
         /* 1. RESET & BACKGROUND */
         body {
-            background-color: #008080; /* Teal Background */
             margin: 0;
+            padding: 0;
             height: 100vh;
             overflow: hidden;
             font-family: 'Pixelated MS Sans Serif', Arial, sans-serif;
+            background-color: #008080; /* Teal Background */
+        }
+
+        /* 2. CENTERING CONTAINER */
+        /* This ensures only ONE window is ever shown in the center */
+        .desktop-container {
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding-bottom: 30px; /* Space for taskbar */
         }
 
-        /* 2. MAIN WINDOW SIZE */
+        /* 3. MAIN WINDOW */
         .window {
             width: 900px;
             height: 650px;
@@ -27,6 +36,7 @@
             display: flex;
             flex-direction: column;
             box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.5);
+            background: #c0c0c0;
             z-index: 10;
         }
 
@@ -38,11 +48,11 @@
             padding: 3px;
         }
 
-        /* 3. MENU & ADDRESS BAR */
+        /* 4. MENUS & BARS */
         .menu-bar { display: flex; gap: 15px; padding: 2px 8px; margin-bottom: 4px; }
         .menu-item { cursor: pointer; }
-        .menu-item::first-letter { text-decoration: underline; }
-
+        .menu-item:hover { background: #000080; color: white; }
+        
         .address-row {
             display: flex;
             align-items: center;
@@ -60,7 +70,7 @@
             font-size: 13px;
         }
 
-        /* 4. SPLIT VIEW */
+        /* 5. EXPLORER LAYOUT (Sidebar + Content) */
         .explorer-body {
             display: flex;
             flex: 1;
@@ -70,7 +80,6 @@
             overflow: hidden;
         }
 
-        /* LEFT SIDEBAR */
         .sidebar {
             width: 200px;
             background: #c0c0c0;
@@ -81,7 +90,9 @@
             gap: 5px;
             overflow-y: auto;
         }
+        
         .sidebar-title { font-weight: bold; margin-bottom: 5px; color: #444; font-size: 12px; }
+        
         .nav-link {
             cursor: pointer;
             padding: 2px 5px;
@@ -93,9 +104,7 @@
             font-size: 13px;
         }
         .nav-link:hover { background: #000080; color: white; }
-        .nav-link img { width: 16px; height: 16px; }
-
-        /* RIGHT CONTENT AREA */
+        
         .main-content {
             flex: 1;
             padding: 20px;
@@ -103,6 +112,7 @@
             background: white;
         }
 
+        /* 6. CONTENT STYLES */
         .section-title {
             border-bottom: 2px solid #000080;
             color: #000080;
@@ -119,7 +129,7 @@
             background: #efefef;
             box-shadow: 2px 2px 0px #aaa;
         }
-        
+
         .tag {
             background: #000080;
             color: white;
@@ -130,7 +140,7 @@
             margin-top: 5px;
         }
 
-        /* 5. TASKBAR */
+        /* 7. TASKBAR */
         .taskbar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
@@ -140,153 +150,131 @@
             display: flex;
             align-items: center;
             padding: 2px;
-            z-index: 999;
+            z-index: 100;
+        }
+        .start-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 2px 6px;
+            font-weight: bold;
+            height: 22px;
+        }
+        .time-tray {
+            margin-left: auto;
+            border: 2px solid;
+            border-color: #888 #fff #fff #888;
+            padding: 2px 8px;
+            background: #c0c0c0;
+            margin-right: 2px;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
 
-    <div class="window">
-        <div class="title-bar">
-            <div class="title-bar-text">Moiz Bhatti - Student Portfolio</div>
-            <div class="title-bar-controls">
-                <button aria-label="Minimize"></button>
-                <button aria-label="Maximize"></button>
-                <button aria-label="Close"></button>
-            </div>
-        </div>
-
-        <div class="window-body">
-            <div class="menu-bar">
-                <div class="menu-item">File</div>
-                <div class="menu-item">Edit</div>
-                <div class="menu-item">View</div>
-                <div class="menu-item">Help</div>
+    <div class="desktop-container">
+        <div class="window">
+            <div class="title-bar">
+                <div class="title-bar-text">Moiz Bhatti - Student Portfolio</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
             </div>
 
-            <div class="address-row">
-                <span>Address</span>
-                <div class="address-input">C:\Users\Moiz_Bhatti\Documents\Profile</div>
-            </div>
-
-            <div class="explorer-body">
-                
-                <div class="sidebar">
-                    <div class="sidebar-title">System Folders</div>
-                    
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/desktop-2.png"> Desktop
-                    </div>
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/my_computer-2.png"> My Computer
-                    </div>
-
-                    <div class="sidebar-title" style="margin-top: 15px;">Projects & Labs</div>
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/directory_open-4.png"> Final Year Project
-                    </div>
-                    <div class="nav-link" style="padding-left: 20px;">
-                        <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png"> OpenLCA
-                    </div>
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png"> Lab Experience
-                    </div>
-
-                     <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/certificate-0.png"> Conferences
-                    </div>
-
-                    <div class="sidebar-title" style="margin-top: 15px;">Personal</div>
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/joystick-0.png"> Gaming & Tech
-                    </div>
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/heart-0.png"> Vet & Fostering
-                    </div>
+            <div class="window-body">
+                <div class="menu-bar">
+                    <div class="menu-item">File</div>
+                    <div class="menu-item">Edit</div>
+                    <div class="menu-item">View</div>
+                    <div class="menu-item">Help</div>
                 </div>
 
-                <div class="main-content">
-                    
-                    <div style="display: flex; gap: 15px; align-items: flex-start; margin-bottom: 20px;">
-                        <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" width="48">
-                        <div>
-                            <h1 style="margin: 0; font-size: 20px;">Moiz Bhatti</h1>
-                            <p style="margin: 5px 0 10px 0;">Environmental Science & Tech Enthusiast</p>
-                            
-                            <a href="mailto:moizbhatti56@gmail.com" style="text-decoration: none;">
-                                <button style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                                    <img src="https://win98icons.alexmeub.com/icons/png/envelope_closed-0.png" width="16">
-                                    Email Me
-                                </button>
-                            </a>
-                        </div>
+                <div class="address-row">
+                    <span>Address</span>
+                    <div class="address-input">C:\Users\Moiz_Bhatti\Documents\Profile</div>
+                </div>
+
+                <div class="explorer-body">
+                    <div class="sidebar">
+                        <div class="sidebar-title">System Folders</div>
+                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/desktop-2.png" width="16"> Desktop</div>
+                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/my_computer-2.png" width="16"> My Computer</div>
+                        
+                        <div class="sidebar-title" style="margin-top: 15px;">Projects</div>
+                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/directory_open-4.png" width="16"> Final Year Project</div>
+                        <div class="nav-link" style="padding-left: 20px;"><img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" width="16"> OpenLCA</div>
+                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/certificate-0.png" width="16"> Conferences</div>
+                        
+                        <div class="sidebar-title" style="margin-top: 15px;">Personal</div>
+                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/joystick-0.png" width="16"> Gaming & Tech</div>
                     </div>
 
-                    <div class="section-title">Final Year Project: OpenLCA Integration</div>
-                    <div class="project-card">
-                        <strong>Project: Regionalizing Life Cycle Assessment (LCA) for Sindh</strong>
-                        <p>Focusing on localized integrations for OpenLCA in Sindh, Pakistan. Key objectives:</p>
-                        <ul style="font-size: 13px; margin-top: 5px;">
-                            <li>Developing climate-resilient alternatives for local industry.</li>
-                            <li>Validating OpenLCA data accuracy by comparing it with real-time sensor testing.</li>
-                            <li>Conducting a meta-LCA of the measuring sensors themselves.</li>
-                        </ul>
-                        <span class="tag">OpenLCA</span> <span class="tag">Sensor Validation</span> <span class="tag">Sustainability</span>
-                    </div>
-
-                    <div class="section-title">Lab Internships (USPCAS-W)</div>
-                    <div class="project-card" style="background: white;">
-                        <p><strong>Hands-on experience in:</strong></p>
-                        <ul style="font-size: 13px; margin-top: 5px; padding-left: 20px;">
-                            <li>Advanced Water & Wastewater Quality Control Lab</li>
-                            <li>Pilot Scale Water & Wastewater Treatment Lab</li>
-                            <li>Soil & Water Analysis Lab</li>
-                            <li>Hydraulics Lab</li>
-                        </ul>
-                    </div>
-
-                    <div class="section-title">Conferences & Certifications</div>
-                    <div class="project-card">
-                        <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px;">
-                            <img src="https://win98icons.alexmeub.com/icons/png/certificate-0.png" width="16">
-                            <strong>International Delegations & Seminars</strong>
-                        </div>
-                        <ul style="font-size: 13px; margin-top: 5px; padding-left: 20px;">
-                            <li><strong>World Bank:</strong> Conference on Climate Change</li>
-                            <li><strong>Intl. Conference:</strong> Water Governance and Climate Resilience</li>
-                            <li><strong>World Water Day:</strong> Official Conference Delegate</li>
-                        </ul>
-                    </div>
-
-                    <div class="section-title">Hardware & Side Quests</div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <div class="project-card">
-                            <div style="display: flex; align-items: center; gap: 5px;">
-                                <img src="https://win98icons.alexmeub.com/icons/png/computer_gear-0.png" width="16">
-                                <strong>Tech Enthusiast</strong>
+                    <div class="main-content">
+                        <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
+                            <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" width="48">
+                            <div>
+                                <h1 style="margin: 0; font-size: 20px;">Moiz Bhatti</h1>
+                                <p style="margin: 5px 0 10px 0;">Environmental Science & Tech Enthusiast</p>
+                                <a href="mailto:moizbhatti56@gmail.com">
+                                    <button style="cursor: pointer;">Email Me</button>
+                                </a>
                             </div>
-                            <ul style="font-size: 12px; padding-left: 15px; margin-top: 5px;">
-                                <li>Expert PC Building (New & Used)</li>
-                                <li>"Bang for Buck" Optimization</li>
-                                <li>Vintage Tech Restoration</li>
-                                <li>Raspberry Pi Tinkering</li>
+                        </div>
+
+                        <div class="section-title">Final Year Project</div>
+                        <div class="project-card">
+                            <strong>Regionalizing Life Cycle Assessment (LCA) for Sindh</strong>
+                            <p>Developing localized integrations for OpenLCA to support climate-resilient industry alternatives.</p>
+                            <ul style="font-size: 13px; margin-top: 5px;">
+                                <li>Validating OpenLCA data via real-time sensor testing.</li>
+                                <li>Conducting meta-LCA of measuring sensors.</li>
+                            </ul>
+                            <span class="tag">OpenLCA</span> <span class="tag">Sustainability</span>
+                        </div>
+
+                        <div class="section-title">Lab Experience (USPCAS-W)</div>
+                        <div class="project-card">
+                            <ul style="font-size: 13px; padding-left: 20px; margin: 0;">
+                                <li>Advanced Water & Wastewater Quality Control Lab</li>
+                                <li>Pilot Scale Water & Wastewater Treatment Lab</li>
+                                <li>Soil & Water Analysis Lab</li>
+                                <li>Hydraulics Lab</li>
                             </ul>
                         </div>
 
+                        <div class="section-title">Conferences</div>
                         <div class="project-card">
-                            <div style="display: flex; align-items: center; gap: 5px;">
-                                <img src="https://win98icons.alexmeub.com/icons/png/joystick-0.png" width="16">
+                            <ul style="font-size: 13px; padding-left: 20px; margin: 0;">
+                                <li><strong>World Bank:</strong> Conference on Climate Change</li>
+                                <li><strong>Intl. Conference:</strong> Water Governance & Climate Resilience</li>
+                                <li><strong>World Water Day:</strong> Official Delegate</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-title">Tech & Personal</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="project-card">
+                                <strong>Hardware</strong>
+                                <ul style="font-size: 12px; padding-left: 15px;">
+                                    <li>PC Building & Optimization</li>
+                                    <li>Vintage Tech Restoration</li>
+                                    <li>Raspberry Pi Tinkering</li>
+                                </ul>
+                            </div>
+                            <div class="project-card">
                                 <strong>Achievements</strong>
+                                <ul style="font-size: 12px; padding-left: 15px;">
+                                    <li>University Gaming Tournament Winner</li>
+                                    <li>Vet Clinic Internship</li>
+                                    <li>Cat Fosterer 🐱</li>
+                                </ul>
                             </div>
-                            <ul style="font-size: 12px; padding-left: 15px; margin-top: 5px;">
-                                <li>University Gaming Tournament Winner</li>
-                                <li>Vet Clinic Internship</li>
-                                <li>Active Cat Fosterer 🐱</li>
-                            </ul>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -294,15 +282,13 @@
 
     <div class="taskbar">
         <button class="start-btn">
-            <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" height="18" style="margin-right: 4px;">
+            <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" height="18">
             Start
         </button>
-        <div style="width: 2px; height: 20px; border-left: 1px solid #888; border-right: 1px solid #fff; margin: 0 5px;"></div>
-        <div style="border: 2px solid; border-color: #888 #fff #fff #888; background: #ddd; padding: 2px 10px; font-weight: bold; font-size: 12px; display: flex; align-items: center; gap: 5px;">
-            <img src="https://win98icons.alexmeub.com/icons/png/directory_open-4.png" height="14">
+        <div style="border: 2px solid; border-color: #888 #fff #fff #888; background: #ddd; padding: 2px 10px; font-weight: bold; font-size: 12px; margin-left: 5px;">
             Moiz_Profile
         </div>
-        <div class="time-tray">12:30 PM</div>
+        <div class="time-tray">1:00 PM</div>
     </div>
 
 </body>
@@ -311,22 +297,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moiz Bhatti - Portfolio</title>
+    <title>Moiz Bhatti - Professional Portfolio</title>
     <link rel="stylesheet" href="https://unpkg.com/98.css">
     <style>
         /* 1. RESET & BACKGROUND */
         body {
-            background-color: #008080; /* Teal Background */
             margin: 0;
+            padding: 0;
             height: 100vh;
             overflow: hidden;
             font-family: 'Pixelated MS Sans Serif', Arial, sans-serif;
+            background-color: #008080; /* Teal Background */
+        }
+
+        /* 2. CENTERING CONTAINER */
+        /* This ensures only ONE window is ever shown in the center */
+        .desktop-container {
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding-bottom: 30px; /* Space for taskbar */
         }
 
-        /* 2. MAIN WINDOW SIZE */
+        /* 3. MAIN WINDOW */
         .window {
             width: 900px;
             height: 650px;
@@ -335,6 +330,7 @@
             display: flex;
             flex-direction: column;
             box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.5);
+            background: #c0c0c0;
             z-index: 10;
         }
 
@@ -346,11 +342,11 @@
             padding: 3px;
         }
 
-        /* 3. MENU & ADDRESS BAR */
+        /* 4. MENUS & BARS */
         .menu-bar { display: flex; gap: 15px; padding: 2px 8px; margin-bottom: 4px; }
         .menu-item { cursor: pointer; }
-        .menu-item::first-letter { text-decoration: underline; }
-
+        .menu-item:hover { background: #000080; color: white; }
+        
         .address-row {
             display: flex;
             align-items: center;
@@ -368,7 +364,7 @@
             font-size: 13px;
         }
 
-        /* 4. SPLIT VIEW */
+        /* 5. EXPLORER LAYOUT (Sidebar + Content) */
         .explorer-body {
             display: flex;
             flex: 1;
@@ -378,7 +374,6 @@
             overflow: hidden;
         }
 
-        /* LEFT SIDEBAR */
         .sidebar {
             width: 200px;
             background: #c0c0c0;
@@ -389,7 +384,9 @@
             gap: 5px;
             overflow-y: auto;
         }
+        
         .sidebar-title { font-weight: bold; margin-bottom: 5px; color: #444; font-size: 12px; }
+        
         .nav-link {
             cursor: pointer;
             padding: 2px 5px;
@@ -401,9 +398,7 @@
             font-size: 13px;
         }
         .nav-link:hover { background: #000080; color: white; }
-        .nav-link img { width: 16px; height: 16px; }
-
-        /* RIGHT CONTENT AREA */
+        
         .main-content {
             flex: 1;
             padding: 20px;
@@ -411,6 +406,7 @@
             background: white;
         }
 
+        /* 6. CONTENT STYLES */
         .section-title {
             border-bottom: 2px solid #000080;
             color: #000080;
@@ -427,7 +423,7 @@
             background: #efefef;
             box-shadow: 2px 2px 0px #aaa;
         }
-        
+
         .tag {
             background: #000080;
             color: white;
@@ -438,7 +434,7 @@
             margin-top: 5px;
         }
 
-        /* 5. TASKBAR */
+        /* 7. TASKBAR */
         .taskbar {
             position: fixed;
             bottom: 0; left: 0; right: 0;
@@ -448,153 +444,131 @@
             display: flex;
             align-items: center;
             padding: 2px;
-            z-index: 999;
+            z-index: 100;
+        }
+        .start-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 2px 6px;
+            font-weight: bold;
+            height: 22px;
+        }
+        .time-tray {
+            margin-left: auto;
+            border: 2px solid;
+            border-color: #888 #fff #fff #888;
+            padding: 2px 8px;
+            background: #c0c0c0;
+            margin-right: 2px;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
 
-    <div class="window">
-        <div class="title-bar">
-            <div class="title-bar-text">Moiz Bhatti - Student Portfolio</div>
-            <div class="title-bar-controls">
-                <button aria-label="Minimize"></button>
-                <button aria-label="Maximize"></button>
-                <button aria-label="Close"></button>
-            </div>
-        </div>
-
-        <div class="window-body">
-            <div class="menu-bar">
-                <div class="menu-item">File</div>
-                <div class="menu-item">Edit</div>
-                <div class="menu-item">View</div>
-                <div class="menu-item">Help</div>
+    <div class="desktop-container">
+        <div class="window">
+            <div class="title-bar">
+                <div class="title-bar-text">Moiz Bhatti - Student Portfolio</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
             </div>
 
-            <div class="address-row">
-                <span>Address</span>
-                <div class="address-input">C:\Users\Moiz_Bhatti\Documents\Profile</div>
-            </div>
-
-            <div class="explorer-body">
-                
-                <div class="sidebar">
-                    <div class="sidebar-title">System Folders</div>
-                    
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/desktop-2.png"> Desktop
-                    </div>
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/my_computer-2.png"> My Computer
-                    </div>
-
-                    <div class="sidebar-title" style="margin-top: 15px;">Projects & Labs</div>
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/directory_open-4.png"> Final Year Project
-                    </div>
-                    <div class="nav-link" style="padding-left: 20px;">
-                        <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png"> OpenLCA
-                    </div>
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png"> Lab Experience
-                    </div>
-
-                     <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/certificate-0.png"> Conferences
-                    </div>
-
-                    <div class="sidebar-title" style="margin-top: 15px;">Personal</div>
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/joystick-0.png"> Gaming & Tech
-                    </div>
-                    <div class="nav-link">
-                        <img src="https://win98icons.alexmeub.com/icons/png/heart-0.png"> Vet & Fostering
-                    </div>
+            <div class="window-body">
+                <div class="menu-bar">
+                    <div class="menu-item">File</div>
+                    <div class="menu-item">Edit</div>
+                    <div class="menu-item">View</div>
+                    <div class="menu-item">Help</div>
                 </div>
 
-                <div class="main-content">
-                    
-                    <div style="display: flex; gap: 15px; align-items: flex-start; margin-bottom: 20px;">
-                        <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" width="48">
-                        <div>
-                            <h1 style="margin: 0; font-size: 20px;">Moiz Bhatti</h1>
-                            <p style="margin: 5px 0 10px 0;">Environmental Science & Tech Enthusiast</p>
-                            
-                            <a href="mailto:moizbhatti56@gmail.com" style="text-decoration: none;">
-                                <button style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                                    <img src="https://win98icons.alexmeub.com/icons/png/envelope_closed-0.png" width="16">
-                                    Email Me
-                                </button>
-                            </a>
-                        </div>
+                <div class="address-row">
+                    <span>Address</span>
+                    <div class="address-input">C:\Users\Moiz_Bhatti\Documents\Profile</div>
+                </div>
+
+                <div class="explorer-body">
+                    <div class="sidebar">
+                        <div class="sidebar-title">System Folders</div>
+                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/desktop-2.png" width="16"> Desktop</div>
+                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/my_computer-2.png" width="16"> My Computer</div>
+                        
+                        <div class="sidebar-title" style="margin-top: 15px;">Projects</div>
+                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/directory_open-4.png" width="16"> Final Year Project</div>
+                        <div class="nav-link" style="padding-left: 20px;"><img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" width="16"> OpenLCA</div>
+                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/certificate-0.png" width="16"> Conferences</div>
+                        
+                        <div class="sidebar-title" style="margin-top: 15px;">Personal</div>
+                        <div class="nav-link"><img src="https://win98icons.alexmeub.com/icons/png/joystick-0.png" width="16"> Gaming & Tech</div>
                     </div>
 
-                    <div class="section-title">Final Year Project: OpenLCA Integration</div>
-                    <div class="project-card">
-                        <strong>Project: Regionalizing Life Cycle Assessment (LCA) for Sindh</strong>
-                        <p>Focusing on localized integrations for OpenLCA in Sindh, Pakistan. Key objectives:</p>
-                        <ul style="font-size: 13px; margin-top: 5px;">
-                            <li>Developing climate-resilient alternatives for local industry.</li>
-                            <li>Validating OpenLCA data accuracy by comparing it with real-time sensor testing.</li>
-                            <li>Conducting a meta-LCA of the measuring sensors themselves.</li>
-                        </ul>
-                        <span class="tag">OpenLCA</span> <span class="tag">Sensor Validation</span> <span class="tag">Sustainability</span>
-                    </div>
-
-                    <div class="section-title">Lab Internships (USPCAS-W)</div>
-                    <div class="project-card" style="background: white;">
-                        <p><strong>Hands-on experience in:</strong></p>
-                        <ul style="font-size: 13px; margin-top: 5px; padding-left: 20px;">
-                            <li>Advanced Water & Wastewater Quality Control Lab</li>
-                            <li>Pilot Scale Water & Wastewater Treatment Lab</li>
-                            <li>Soil & Water Analysis Lab</li>
-                            <li>Hydraulics Lab</li>
-                        </ul>
-                    </div>
-
-                    <div class="section-title">Conferences & Certifications</div>
-                    <div class="project-card">
-                        <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 5px;">
-                            <img src="https://win98icons.alexmeub.com/icons/png/certificate-0.png" width="16">
-                            <strong>International Delegations & Seminars</strong>
-                        </div>
-                        <ul style="font-size: 13px; margin-top: 5px; padding-left: 20px;">
-                            <li><strong>World Bank:</strong> Conference on Climate Change</li>
-                            <li><strong>Intl. Conference:</strong> Water Governance and Climate Resilience</li>
-                            <li><strong>World Water Day:</strong> Official Conference Delegate</li>
-                        </ul>
-                    </div>
-
-                    <div class="section-title">Hardware & Side Quests</div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <div class="project-card">
-                            <div style="display: flex; align-items: center; gap: 5px;">
-                                <img src="https://win98icons.alexmeub.com/icons/png/computer_gear-0.png" width="16">
-                                <strong>Tech Enthusiast</strong>
+                    <div class="main-content">
+                        <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
+                            <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" width="48">
+                            <div>
+                                <h1 style="margin: 0; font-size: 20px;">Moiz Bhatti</h1>
+                                <p style="margin: 5px 0 10px 0;">Environmental Science & Tech Enthusiast</p>
+                                <a href="mailto:moizbhatti56@gmail.com">
+                                    <button style="cursor: pointer;">Email Me</button>
+                                </a>
                             </div>
-                            <ul style="font-size: 12px; padding-left: 15px; margin-top: 5px;">
-                                <li>Expert PC Building (New & Used)</li>
-                                <li>"Bang for Buck" Optimization</li>
-                                <li>Vintage Tech Restoration</li>
-                                <li>Raspberry Pi Tinkering</li>
+                        </div>
+
+                        <div class="section-title">Final Year Project</div>
+                        <div class="project-card">
+                            <strong>Regionalizing Life Cycle Assessment (LCA) for Sindh</strong>
+                            <p>Developing localized integrations for OpenLCA to support climate-resilient industry alternatives.</p>
+                            <ul style="font-size: 13px; margin-top: 5px;">
+                                <li>Validating OpenLCA data via real-time sensor testing.</li>
+                                <li>Conducting meta-LCA of measuring sensors.</li>
+                            </ul>
+                            <span class="tag">OpenLCA</span> <span class="tag">Sustainability</span>
+                        </div>
+
+                        <div class="section-title">Lab Experience (USPCAS-W)</div>
+                        <div class="project-card">
+                            <ul style="font-size: 13px; padding-left: 20px; margin: 0;">
+                                <li>Advanced Water & Wastewater Quality Control Lab</li>
+                                <li>Pilot Scale Water & Wastewater Treatment Lab</li>
+                                <li>Soil & Water Analysis Lab</li>
+                                <li>Hydraulics Lab</li>
                             </ul>
                         </div>
 
+                        <div class="section-title">Conferences</div>
                         <div class="project-card">
-                            <div style="display: flex; align-items: center; gap: 5px;">
-                                <img src="https://win98icons.alexmeub.com/icons/png/joystick-0.png" width="16">
+                            <ul style="font-size: 13px; padding-left: 20px; margin: 0;">
+                                <li><strong>World Bank:</strong> Conference on Climate Change</li>
+                                <li><strong>Intl. Conference:</strong> Water Governance & Climate Resilience</li>
+                                <li><strong>World Water Day:</strong> Official Delegate</li>
+                            </ul>
+                        </div>
+
+                        <div class="section-title">Tech & Personal</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="project-card">
+                                <strong>Hardware</strong>
+                                <ul style="font-size: 12px; padding-left: 15px;">
+                                    <li>PC Building & Optimization</li>
+                                    <li>Vintage Tech Restoration</li>
+                                    <li>Raspberry Pi Tinkering</li>
+                                </ul>
+                            </div>
+                            <div class="project-card">
                                 <strong>Achievements</strong>
+                                <ul style="font-size: 12px; padding-left: 15px;">
+                                    <li>University Gaming Tournament Winner</li>
+                                    <li>Vet Clinic Internship</li>
+                                    <li>Cat Fosterer 🐱</li>
+                                </ul>
                             </div>
-                            <ul style="font-size: 12px; padding-left: 15px; margin-top: 5px;">
-                                <li>University Gaming Tournament Winner</li>
-                                <li>Vet Clinic Internship</li>
-                                <li>Active Cat Fosterer 🐱</li>
-                            </ul>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -602,15 +576,13 @@
 
     <div class="taskbar">
         <button class="start-btn">
-            <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" height="18" style="margin-right: 4px;">
+            <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" height="18">
             Start
         </button>
-        <div style="width: 2px; height: 20px; border-left: 1px solid #888; border-right: 1px solid #fff; margin: 0 5px;"></div>
-        <div style="border: 2px solid; border-color: #888 #fff #fff #888; background: #ddd; padding: 2px 10px; font-weight: bold; font-size: 12px; display: flex; align-items: center; gap: 5px;">
-            <img src="https://win98icons.alexmeub.com/icons/png/directory_open-4.png" height="14">
+        <div style="border: 2px solid; border-color: #888 #fff #fff #888; background: #ddd; padding: 2px 10px; font-weight: bold; font-size: 12px; margin-left: 5px;">
             Moiz_Profile
         </div>
-        <div class="time-tray">12:30 PM</div>
+        <div class="time-tray">1:00 PM</div>
     </div>
 
 </body>
