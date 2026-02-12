@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio.exe</title>
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+    <style>
+        body {
+            background-color: #008080; /* The classic teal background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Pixelated MS Sans Serif', Arial, sans-serif;
+        }
+        
+        .window {
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        .window-body {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .profile-header {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border: 2px solid transparent;
+            box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+        }
+
+        .profile-header h1 {
+            margin: 0;
+            font-size: 22px;
+            text-transform: uppercase;
+        }
+
+        .profile-header p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        fieldset {
+            padding: 10px;
+            margin: 0;
+        }
+
+        legend {
+            font-weight: bold;
+        }
+
+        .project-item {
+            margin-bottom: 12px;
+            border-bottom: 1px dotted #888;
+            padding-bottom: 8px;
+        }
+
+        .project-item:last-child {
+            border-bottom: none;
+        }
+        
+        .project-title {
+            font-weight: bold;
+            font-size: 15px;
+            display: block;
+        }
+
+        .tech-stack {
+            font-size: 12px;
+            color: #444;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        ul.interests {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 13px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        a {
+            color: #000080;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">Resume.exe - Student Profile</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+
+        <div class="window-body">
+            
+            <div class="profile-header">
+                <h1>[YOUR NAME HERE]</h1>
+                <p>Environmental Science Student & Tech Enthusiast</p>
+            </div>
+
+            <fieldset>
+                <legend>System Properties</legend>
+                <p>University student with a focus on Hydrology and Natural Resources. Passionate about using data to understand environmental systems. When I'm not studying, I'm optimizing PC hardware and testing new tech.</p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Current Projects</legend>
+                
+                <div class="project-item">
+                    <span class="project-title">Hydrology Quiz Database</span>
+                    <p>Processed lecture materials to create a comprehensive question bank for water management systems. Analyzed key data points for exam prep optimization.</p>
+                    <div class="tech-stack">Skills: Data Synthesis, Research, Resource Management</div>
+                </div>
+
+                <div class="project-item">
+                    <span class="project-title">Natural Resources Assessment</span>
+                    <p>Conducted a review of forest management strategies and environmental impact factors.</p>
+                    <div class="tech-stack">Skills: Environmental Analysis, Reporting</div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Hardware & Interests</legend>
+                <ul class="interests">
+                    <li><strong>PC Building:</strong> Peripherals & Hardware optimization (Mice/Keyboards).</li>
+                    <li><strong>Mobile Tech:</strong> Legacy feature preservation enthusiast.</li>
+                    <li><strong>Research:</strong> Academic data processing.</li>
+                </ul>
+            </fieldset>
+
+            <div class="footer">
+                <p>Status: <span style="color: green;">Online</span> | <a href="mailto:your-email@example.com">Email Me</a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
